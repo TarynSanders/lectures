@@ -24,7 +24,7 @@ def doDecrypt(enc_sign_file, sign_key_file, sym_key_file, out_msg_file):
     with open(enc_sign_file, "rb") as bin_file:
         raw_contents = bin_file.read()
         # Separate the hash and the remaining part of the message
-        recv_encrypted_hash = (raw_contents[1:256]) # fill me in - remember we can splice with [start:end]
+        recv_encrypted_hash = (raw_contents[:256]) # fill me in - remember we can splice with [start:end]
         recv_encrypted_msg =  (raw_contents[256:])  # fill me in - remember we can splice with [start:end]
 
     # Read Necessary Public/Private Signature Key from File
@@ -64,7 +64,8 @@ def doDecrypt(enc_sign_file, sign_key_file, sym_key_file, out_msg_file):
     # Now that we've verified the signature, decrypt the message content
 
     # some code here
-    decrypted_text = # call the decrypt function appropriate to produce decrypted_text
+    cipher_suite = Fernet(key)
+    decrypted_text = cipher_suite.decrupt(recv_encrypted_msg)# call the decrypt function appropriate to produce decrypted_text
 
     print(f"Decrypted Text: {decrypted_text}")
     print("")
